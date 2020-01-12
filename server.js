@@ -1,23 +1,35 @@
 // http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
 "use strict";
-
+const assert = require('assert');
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://justo:fn231093@cluster0-syxf1.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   const collection = client.db("chatrecicla").collection("chatrecicla");
+  const db = client.db("chatrecicla");
   // perform actions on the collection object
   client.close();
+  insertDocuments(db, function() {
+    db.close();
+  });
 });
 
 
-client.db.collection.insertOne({
-  item: "canvas",
-  qty: 100,
-  tags: ["cotton"],
-  size: { h: 28, w: 35.5, uom: "cm" }
-});
+var insertDocuments = function(db, callback) {
+  // Get the documents collection
+  var collection = db.collection('chatrecicla');
+  // Insert some documents
+  collection.insertMany([
+    {a : 1}, {a : 2}, {a : 3}
+  ], function(err, result) {
+    assert.equal(err, null);
+    assert.equal(3, result.result.n);
+    assert.equal(3, result.ops.length);
+    console.log("Inserted 3 documents into the collection");
+    callback(result);
+  });
+}
 
 // Optional. You will see this name in eg. 'ps' or 'top' command
 process.title = 'node-chat';
