@@ -12,7 +12,7 @@ client.connect(err => {
 });
 
 
-client.collection.insertOne({
+client.db.collection.insertOne({
   item: "canvas",
   qty: 100,
   tags: ["cotton"],
