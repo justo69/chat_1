@@ -24,7 +24,7 @@ $(function () {
     }
 
     // open connection
-    var connection = new WebSocket('wss://chatrecicla.herokuapp.com:1337');
+    var connection = new WebSocket('wss://chatrecicla.herokuapp.com');
 
     connection.onopen = function () {
         // first we want users to enter their names

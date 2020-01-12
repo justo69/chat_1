@@ -1,6 +1,24 @@
 // http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
 "use strict";
 
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://justo:fn231093@cluster0-syxf1.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("chatrecicla").collection("chatrecicla");
+  // perform actions on the collection object
+  client.close();
+});
+
+
+client.collection.insertOne({
+  item: "canvas",
+  qty: 100,
+  tags: ["cotton"],
+  size: { h: 28, w: 35.5, uom: "cm" }
+});
+
 // Optional. You will see this name in eg. 'ps' or 'top' command
 process.title = 'node-chat';
 
