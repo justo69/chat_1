@@ -35,7 +35,8 @@ function chatea(client){
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;')
                           .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
                           .replace(/(https?:\/\/[^\s]*\.(?:jpg|jpeg|gif|png))/g, '<img src="$1">')
-                          .replace(/https?:\/\/(?![^\"\s]*(?:jpg|png|gif))[^\"\s]+/g, '<a href="$&">$&</a>');
+                          .replace(/https?:\/\/(?!(youtu))(?![^\"\s]*(?:jpg|png|gif))[^\"\s]+/g, '<a href="$&">$&</a>')
+                          .replace(/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g, '<iframe width="160" height="90" src="https://www.youtube.com/embed/$1?loop=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
     }
 
     // Array with some colors
@@ -114,7 +115,7 @@ function chatea(client){
                     };
                     history.push(obj);
                     history = history.slice(-100);
-                    client.db('chatrecicla').collection('chatrecicla').insertOne(obj);
+                    //client.db('chatrecicla').collection('chatrecicla').insertOne(obj);
                     // broadcast message to all connected clients
                     var json = JSON.stringify({ type:'message', data: obj });
                     for (var i=0; i < clients.length; i++) {
