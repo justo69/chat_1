@@ -79,11 +79,9 @@ function chatea(client){
 
         console.log((new Date()) + ' Connection accepted.');
         var N = 6;
-        console.log('antes');
         var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(client.db("chatrecicla").collection("chatrecicla").count() - N).toArray(function(err,results){
             connection.sendUTF(JSON.stringify( { type: 'history', data: results} ));
         });
-        console.log('despues');
         // send back chat history
        /* if (history.length > 0) {
             connection.sendUTF(JSON.stringify( { type: 'history', data: history2} ));
@@ -114,7 +112,7 @@ function chatea(client){
                     };
                     history.push(obj);
                     history = history.slice(-100);
-                    //client.db('chatrecicla').collection('chatrecicla').insertOne(obj);
+                    client.db('chatrecicla').collection('chatrecicla').insertOne(obj);
                     // broadcast message to all connected clients
                     var json = JSON.stringify({ type:'message', data: obj });
                     for (var i=0; i < clients.length; i++) {
