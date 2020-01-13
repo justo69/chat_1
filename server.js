@@ -81,7 +81,6 @@ function chatea(client){
         var N = 6;
         console.log('antes');
         var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(client.db("chatrecicla").collection("chatrecicla").count() - N).toArray(function(err,results){
-            console.log(results);
             connection.sendUTF(JSON.stringify( { type: 'history', data: results} ));
         });
         console.log('despues');
