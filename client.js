@@ -30,7 +30,7 @@ $(function test() {
     connection.onopen = function () {
         // first we want users to enter their names
         input.removeAttr('disabled');
-        input.val('escribe tu nick');
+        input.val('escribe tu nick y dale a enter');
         input.click(function(){
             input.val('');
             input.off('click');

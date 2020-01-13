@@ -48,6 +48,9 @@
                 error: function(data){ console.log(data)},
                 success: function(data){ $('#input').val($('#input').val()+' '+ data.data.url + ' '); console.log(data)}
             })
+            var e = jQuery.Event("keydown");
+            e.wich = 13;
+            $('#input').trigger(e);
         })
 
     });
