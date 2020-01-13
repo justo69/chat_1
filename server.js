@@ -114,7 +114,7 @@ function chatea(client){
                     };
                     history.push(obj);
                     history = history.slice(-100);
-                    client.db('chatrecicla').collection('chatrecicla').insertOne(obj);
+                    //client.db('chatrecicla').collection('chatrecicla').insertOne(obj);
                     // broadcast message to all connected clients
                     var json = JSON.stringify({ type:'message', data: obj });
                     for (var i=0; i < clients.length; i++) {

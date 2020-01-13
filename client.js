@@ -1,5 +1,5 @@
 var conectado = 0;
-$(function () {
+$(function test() {
     "use strict";
 
     // for better performance - to avoid searching in DOM
@@ -25,7 +25,7 @@ $(function () {
     }
 
     // open connection
-    var connection = new WebSocket('wss://chatrecicla.herokuapp.com/');
+    var connection = new WebSocket('wss://chatrecicla.herokuapp.com');
 
     connection.onopen = function () {
         // first we want users to enter their names
@@ -36,11 +36,14 @@ $(function () {
             input.off('click');
         })
     };
-
+    connection.onclose = function(){
+        setTimeout(test,1000);
+    }
     connection.onerror = function (error) {
         // just in there were some problems with conenction...
         content.html($('<p>', { text: 'Sorry, but there\'s some problem with your '
                                     + 'connection or the server is down.' } ));
+        connection.close();
     };
 
     // most important part - incoming messages
@@ -105,13 +108,14 @@ $(function () {
      * in 3 seconds then show some error message to notify the user that
      * something is wrong.
      */
-    setInterval(function() {
+    /*setInterval(function() {
         if (connection.readyState !== 1) {
             status.text('Error');
             input.attr('disabled', 'disabled').val('Unable to comminucate '
                                                  + 'with the WebSocket server.');
+            test();
         }
-    }, 3000);
+    }, 3000);*/
 
     /**
      * Add message to the chat window
