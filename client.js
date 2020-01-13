@@ -11,7 +11,7 @@ $(function test() {
     var myColor = false;
     // my name sent to the server
     var myName = (name!==false)? name : false;
-    alert(name);
+    alert(myName);
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
 
@@ -30,11 +30,17 @@ $(function test() {
     connection.onopen = function () {
         // first we want users to enter their names
         input.removeAttr('disabled');
+        if(!myName){
         input.val('enter your name');
         input.click(function(){
             input.val('');
             input.off('click');
         })
+        }
+        else{
+            input.val(myName);
+            connection.send(myName);
+        }
     };
     connection.onclose = function(){
         setTimeout(inside(myName),1000);
@@ -82,6 +88,7 @@ $(function test() {
         function dispara(){
             // send the message as an ordinary text
             var msg = $('#input').val();
+            alert(msg);
             connection.send(msg);
             $('#input').val('');
             // disable the input field to make the user wait until server
@@ -103,6 +110,7 @@ $(function test() {
             if (!msg) {
                 return;
             }
+            alert(msg);
             // send the message as an ordinary text
             connection.send(msg);
             $(this).val('');
