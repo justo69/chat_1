@@ -12,9 +12,10 @@
         img {max-width: 400px;}
         #content { background:#fff; margin-bottom: 3vw;/*overflow-y: scroll;
                     */ }
-        #input {  width: 100%; position: fixed; bottom: 0; left: 0; font-size: 3vw; }
+        #input {  width: 96%; position: fixed; bottom: 0; left: 0; font-size: 3vw; }
         #image {               position: fixed; bottom: 0;          font-size: 3vw; right:0; }
         #wenoweno{               position: fixed; bottom: 4vw;          font-size: 3vw; right:0; border: 2px black;}
+        #enviar{               position: fixed; bottom: 0vw;          font-size: 3vw; right:0; border: 2px black; background-color: #c9edf2;}
         #status { width:88px; display:block; float:left; }
         </style>
     </head>
@@ -26,7 +27,8 @@
             <input type="text" id="input" disabled="disabled" />
 <form id="imgbb" method="POST" url="https://api.imgbb.com/1/upload?key=f78e74601edcdc526eb41972404beeaa">
 <input type="file" id="image" value="SUBIR IMAGEN..." name="image" style="display: none;"/>
-<label for="image" id="wenoweno">SUBIR IMAGEN...</label>
+<label for="image" id="wenoweno">UPLOAD</label>
+<label id="enviar">⏩</label>
 </form>
             </span>
         </div>
@@ -48,10 +50,8 @@
                 error: function(data){ console.log(data)},
                 success: function(data){ $('#input').val($('#input').val()+' '+ data.data.url + ' '); console.log(data)}
             })
-            var e = jQuery.Event("keydown");
-            e.wich = 13;
-            $('#input').trigger(e);
         })
+
 
     });
 </script>

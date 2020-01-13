@@ -1,7 +1,7 @@
-var conectado = 0;
+var active = 1;
 $(function test() {
     "use strict";
-
+    function inside(name = false){
     // for better performance - to avoid searching in DOM
     var content = $('#content');
     var input = $('#input');
@@ -10,8 +10,8 @@ $(function test() {
     // my color assigned by the server
     var myColor = false;
     // my name sent to the server
-    var myName = false;
-
+    var myName = (name!==false)? name : false;
+    alert(name);
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
 
@@ -25,19 +25,19 @@ $(function test() {
     }
 
     // open connection
-    var connection = new WebSocket('wss://chatrecicla.herokuapp.com');
+    var connection = new WebSocket('ws://127.0.0.1:3000');
 
     connection.onopen = function () {
         // first we want users to enter their names
         input.removeAttr('disabled');
-        input.val('escribe tu nick y dale a enter');
+        input.val('enter your name');
         input.click(function(){
             input.val('');
             input.off('click');
         })
     };
     connection.onclose = function(){
-        setTimeout(test,1000);
+        setTimeout(inside(myName),1000);
     }
     connection.onerror = function (error) {
         // just in there were some problems with conenction...
@@ -79,7 +79,21 @@ $(function test() {
             console.log('Hmm..., I\'ve never seen JSON like this: ', json);
         }
     };
+        function dispara(){
+            // send the message as an ordinary text
+            var msg = $('#input').val();
+            connection.send(msg);
+            $('#input').val('');
+            // disable the input field to make the user wait until server
+            // sends back response
+            input.attr('disabled', 'disabled');
 
+            // we know that the first message sent from a user their name
+            if (myName === false) {
+                myName = msg;
+            }
+        }
+        $('#enviar').click(dispara);
     /**
      * Send mesage when user presses Enter key
      */
@@ -127,4 +141,6 @@ $(function test() {
              + */': ' + message + '</p>');
         $(document).scrollTop($(document).height());
     }
+}
+inside();
 });

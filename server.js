@@ -95,6 +95,7 @@ function chatea(client){
                     userName = htmlEntities(message.utf8Data);
                     // get random color and send it back to the user
                     userColor = colors.shift();
+                    console.log(message);
                     connection.sendUTF(JSON.stringify({ type:'color', data: userColor }));
                     console.log((new Date()) + ' User is known as: ' + userName
                                 + ' with ' + userColor + ' color.');
