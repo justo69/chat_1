@@ -34,7 +34,8 @@ function chatea(client){
     function htmlEntities(str) {
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;')
                           .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-                          .replace(/(https?:\/\/[^\s]*\.(?:jpg|jpeg|gif|png))/g, '<img src="$1">');
+                          .replace(/(https?:\/\/[^\s]*\.(?:jpg|jpeg|gif|png))/g, '<img src="$1">')
+                          .replace(/https?:\/\/(?![^\"\s]*(?:jpg|png|gif))[^\"\s]+/g,, '<a href="$1">$1</a>');
     }
 
     // Array with some colors

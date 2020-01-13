@@ -1,0 +1,21 @@
+<form id="imgbb" method="POST" url="https://api.imgbb.com/1/upload?key=f78e74601edcdc526eb41972404beeaa">
+<input type="file" id="image" name="image">
+</form>
+<script src="jquery.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#image').bind('change', function(){
+			var formData = new FormData($('#imgbb')[0]);
+			$.ajax({
+				url: 'https://api.imgbb.com/1/upload?key=f78e74601edcdc526eb41972404beeaa',
+				method: 'POST',
+				data: formData,
+				contentType: false,
+				processData: false,
+				error: function(data){ console.log(data)},
+				success: function(data){ console.log(data)}
+			})
+		})
+
+	});
+</script>

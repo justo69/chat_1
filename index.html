@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="jquery-ui.css">
         <meta charset="utf-8">
-        <title>WebSockets - Simple chat</title>
+        <title>chat with images!</title>
 
         <style>
         * { font-family:tahoma; font-size:12px; padding:0px; margin:0px; }
         p { line-height:18px; }
         div { width:100%; margin-left:auto; margin-right:auto;}
-        #content { background:#ddd; /*overflow-y: scroll;
+        img {max-width: 400px;}
+        #content { background:#fff; margin-bottom: 3vw;/*overflow-y: scroll;
                     */ }
-        #input {  width: 100%; position: fixed; bottom: 0; left: 0; }
+        #input {  width: 100%; position: fixed; bottom: 0; left: 0; font-size: 3vw; }
+        #image {               position: fixed; bottom: 0;          font-size: 3vw; right:0; }
+        #wenoweno{               position: fixed; bottom: 4vw;          font-size: 3vw; right:0; border: 2px black;}
         #status { width:88px; display:block; float:left; }
         </style>
     </head>
@@ -18,10 +22,35 @@
         <div id="content"></div>
         <div>
             <span id="status">Connecting...</span>
+            <span id="inputs">
             <input type="text" id="input" disabled="disabled" />
+<form id="imgbb" method="POST" url="https://api.imgbb.com/1/upload?key=f78e74601edcdc526eb41972404beeaa">
+<input type="file" id="image" value="SUBIR IMAGEN..." name="image" style="display: none;"/>
+<label for="image" id="wenoweno">SUBIR IMAGEN...</label>
+</form>
+            </span>
         </div>
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="./jquery.js"></script>
+        <script src="./jquery-ui.js"></script>
         <script src="./client.js"></script>
+<script src="jquery.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#image').bind('change', function(){
+            var formData = new FormData($('#imgbb')[0]);
+            $.ajax({
+                url: 'https://api.imgbb.com/1/upload?key=f78e74601edcdc526eb41972404beeaa',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                error: function(data){ console.log(data)},
+                success: function(data){ $('#input').val($('#input').val()+' '+ data.data.url + ' '); console.log(data)}
+            })
+        })
+
+    });
+</script>
     </body>
 </html>

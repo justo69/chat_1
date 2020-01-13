@@ -30,7 +30,7 @@ $(function () {
     connection.onopen = function () {
         // first we want users to enter their names
         input.removeAttr('disabled');
-        input.val('Choose name:');
+        input.val('escribe tu nick');
         input.click(function(){
             input.val('');
             input.off('click');
@@ -117,10 +117,10 @@ $(function () {
      * Add message to the chat window
      */
     function addMessage(author, message, color, dt) {
-        content.append('<p><span style="color:' + color + '">' + author + '</span> @ ' +
+        content.append('<p><span style="color:' + color + '">' + author + '</span>'+/* @ ' +
              + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
              + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
-             + ': ' + message + '</p>');
+             + */': ' + message + '</p>');
         $(document).scrollTop($(document).height());
     }
 });
