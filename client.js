@@ -1,7 +1,7 @@
 var active = 1;
 $(function test() {
     "use strict";
-    function inside(name = false){
+
     // for better performance - to avoid searching in DOM
     var content = $('#content');
     var input = $('#input');
@@ -10,8 +10,8 @@ $(function test() {
     // my color assigned by the server
     var myColor = false;
     // my name sent to the server
-    var myName = (name!==false)? name : false;
-    alert(myName);
+    var myName = false;
+
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
 
@@ -25,25 +25,19 @@ $(function test() {
     }
 
     // open connection
-    var connection = new WebSocket('ws://127.0.0.1:3000');
+    var connection = new WebSocket('wss://chatrecicla.herokuapp.com');
 
     connection.onopen = function () {
         // first we want users to enter their names
         input.removeAttr('disabled');
-        if(!myName){
         input.val('enter your name');
-        input.click(function(){
+        input.focus(function(){
             input.val('');
-            input.off('click');
+            input.off('focus');
         })
-        }
-        else{
-            input.val(myName);
-            connection.send(myName);
-        }
     };
     connection.onclose = function(){
-        setTimeout(inside(myName),1000);
+        setTimeout(test,1000);
     }
     connection.onerror = function (error) {
         // just in there were some problems with conenction...
@@ -88,7 +82,6 @@ $(function test() {
         function dispara(){
             // send the message as an ordinary text
             var msg = $('#input').val();
-            alert(msg);
             connection.send(msg);
             $('#input').val('');
             // disable the input field to make the user wait until server
@@ -110,7 +103,6 @@ $(function test() {
             if (!msg) {
                 return;
             }
-            alert(msg);
             // send the message as an ordinary text
             connection.send(msg);
             $(this).val('');
@@ -149,6 +141,4 @@ $(function test() {
              + */': ' + message + '</p>');
         $(document).scrollTop($(document).height());
     }
-}
-inside();
 });

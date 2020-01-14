@@ -2,6 +2,36 @@
 <html>
     <head>
         <link rel="stylesheet" href="jquery-ui.css">
+        <script src="./jquery.js"></script>
+        <script src="./jquery-ui.js"></script>
+        <script src="./client.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#image').bind('change', function(){
+            var formData = new FormData($('#imgbb')[0]);
+            $.ajax({
+                url: 'https://api.imgbb.com/1/upload?key=f78e74601edcdc526eb41972404beeaa',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                error: function(data){ console.log(data)},
+                success: function(data){ $('#input').val($('#input').val()+' '+ data.data.url + ' '); console.log(data)}
+            })
+        })
+
+        $('#input').on('drop', function (ev){
+        //ev.preventDefault();
+        var data=ev.originalEvent.dataTransfer.getData("Text");
+        $('#input').on('input', function(ev){
+            $('#input').val($('#input').val().replace(data, data+' '));
+            $('#input').off('input');
+        })
+        });
+
+    });
+
+</script>
         <meta charset="utf-8">
         <title>chat with images!</title>
 
@@ -33,27 +63,5 @@
             </span>
         </div>
 
-        <script src="./jquery.js"></script>
-        <script src="./jquery-ui.js"></script>
-        <script src="./client.js"></script>
-<script src="jquery.js"></script>
-<script>
-    $(document).ready(function(){
-        $('#image').bind('change', function(){
-            var formData = new FormData($('#imgbb')[0]);
-            $.ajax({
-                url: 'https://api.imgbb.com/1/upload?key=f78e74601edcdc526eb41972404beeaa',
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                error: function(data){ console.log(data)},
-                success: function(data){ $('#input').val($('#input').val()+' '+ data.data.url + ' '); console.log(data)}
-            })
-        })
-
-
-    });
-</script>
     </body>
 </html>
