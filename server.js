@@ -32,7 +32,7 @@ function chatea(client){
      * Helper function for escaping input strings
      */
     function htmlEntities(str) {
-        return String(str).replace(/&/g, '&amp;').replace(/<(?!marquee>)/g, '&lt;')
+        return String(str).replace(/&/g, '&amp;').replace(/<(?!(marquee|\/marquee>))/g, '&lt;')
                           .replace(/(?!marquee)>/g, '&gt;').replace(/"/g, '&quot;').replace(/\'/g,'&apos;')
                           .replace(/(https?:\/\/[^\s]*\.(?:jpg|jpeg|gif|png))/g, '<img src="$1">')
                           .replace(/https?:\/\/(?!(youtu))(?![^\"\s]*(?:jpg|png|gif))[^\"\s]+/g, '<a href="$&">$&</a>')
