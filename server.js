@@ -3,7 +3,7 @@
 const assert = require('assert');
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://justo:fn231093@cluster0-syxf1.mongodb.net/test?retryWrites=true&w=majority";
+const uri = "mongodb+srv://justo:XxxXxxXxx@cluster0-syxf1.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect()
  .then( client => chatea(client));
