@@ -10,7 +10,7 @@ client.connect()
  .then( client => chatea(client));
 
 
-function chatea(client){
+async function chatea(client){
     // Optional. You will see this name in eg. 'ps' or 'top' command
     process.title = 'node-chat';
 
