@@ -40,7 +40,7 @@ function chatea(client){
         return String(str).replace(/&/g, '&amp;').replace(/<(?!(marquee>|\/marquee>))/g, '&lt;')
                           /*.replace(/(?!marquee)>/g, '&gt;')*/.replace(/"/g, '&quot;').replace(/\'/g,'&apos;')
                           .replace(/(https?:\/\/[^\s]*\.(?:jpg|jpeg|gif|png))/g, '<img src="$1">')
-                          .replace(/https?:\/\/(?!(youtu))(?![^\"\s]*(?:jpg|png|gif))[^\"\s]+/g, '<a href="$&">$&</a>')
+                          .replace(/https?:\/\/(?!(youtu|www.youtu))(?![^\"\s]*(?:jpg|png|gif))[^\"\s]+/g, '<a href="$&">$&</a>')
                           .replace(/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g, '<iframe width="160" height="90" src="https://www.youtube.com/embed/$1?loop=1&playlist=$1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
     }
 

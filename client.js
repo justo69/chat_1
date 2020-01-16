@@ -63,7 +63,7 @@ $(function test() {
             return;
         }
         if(!document.hasFocus()){
-            $('title').prepend('* ');
+            document.title('*chat with images!');
         }
         // NOTE: if you're not sure about the JSON structure
         // check the server source code above
@@ -113,11 +113,6 @@ $(function test() {
             if (!msg) {
                 return;
             }
-
-        if(msg=="close"){
-            connection.close();
-            return;
-        }
             // send the message as an ordinary text
             connection.send(msg);
             $(this).val('');
