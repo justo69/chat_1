@@ -136,15 +136,19 @@ function chatea(client){
                 console.log((new Date()) + " Peer "
                     + connection.remoteAddress + " disconnected.");
                 // remove user from the list of connected clients
+                var deleteIndex = null;
                 for(var i = 0; i < clients.length; i++){
                 if(clients[i].id == id){
-                    clients.splice(i,1);
                     console.log('client '+clients[i].id+' disconnected');
+                    deleteIndex = i;
                 }
                 else{
                     console.log('no match:'+clients[i].id?clients[i].id:'noid');
                 }
-            }
+            }   
+                if(deleteIndex >=0){                    
+                    clients.splice(deleteIndex,1);
+                }
             console.log('noloop.'+clients.length);
                 // push back user's color to be reused by another user
                 colors.push(userColor);
