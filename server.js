@@ -88,8 +88,7 @@ async function chatea(client){
         console.log((new Date()) + ' Connection accepted.');
         var N = 6;
         var n_of_m = await client.db("chatrecicla").collection("chatrecicla").countDocuments();
-        console.log('n Of messages: '+n_of_m);
-        var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(client.db("chatrecicla").collection("chatrecicla").countDocuments() - 20).toArray(function(err,results){
+        var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(n_of_m - N).toArray(function(err,results){
             connection.sendUTF(JSON.stringify( { type: 'history', data: results} ));
         });
         // send back chat history
