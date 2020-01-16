@@ -80,6 +80,7 @@ function chatea(client){
         // we need to know client index to remove them on 'close' event
         var id = uuid.v4();
         connection.id = id;
+        console.log('id='+id);
         var index = clients.push(connection) - 1;
         var userName = false;
         var userColor = false;
