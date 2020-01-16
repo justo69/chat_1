@@ -87,7 +87,7 @@ function chatea(client){
 
         console.log((new Date()) + ' Connection accepted.');
         var N = 6;
-        var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(client.db("chatrecicla").collection("chatrecicla").count() - N).toArray(function(err,results){
+        var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(client.db("chatrecicla").collection("chatrecicla").countDocuments() - N).toArray(function(err,results){
             connection.sendUTF(JSON.stringify( { type: 'history', data: results} ));
         });
         // send back chat history

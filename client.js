@@ -62,8 +62,8 @@ $(function test() {
             console.log('This doesn\'t look like a valid JSON: ', message.data);
             return;
         }
-        if(!document.hasFocus()){
-            document.title('*chat with images!');
+        if(document.visibilityState=='hidden'){
+            document.title='* chat with images!';
         }
         // NOTE: if you're not sure about the JSON structure
         // check the server source code above
@@ -76,7 +76,7 @@ $(function test() {
             // insert every single message to the chat window
             for (var i=0; i < json.data.length; i++) {
                 addMessage(json.data[i].author, json.data[i].text,
-                           json.data[i].color, new Date(json.data[i].time));
+                           json.data[i].color, new Date(json.data[i].time), true);
             }
         } else if (json.type === 'message') { // it's a single message
             input.removeAttr('disabled'); // let the user write another message

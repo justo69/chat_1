@@ -28,8 +28,11 @@
             $('#input').off('input');
         })
         });
-
+        
     });
+    window.onload=function(){
+        $('content').scrollTop($('content').height());
+    };
 
 </script>
         <meta charset="utf-8">
@@ -50,24 +53,25 @@ src: local('Waltograph UI Bold'), url('waltographUI.woff') format('woff');
         p { line-height:18px; }
         div { width:100%; margin-left:auto; margin-right:auto;}
         img {max-width: 400px;}
-        #content { background:#fff; margin-bottom: 3vw;/*overflow-y: scroll;
+        #content { background:#fff; margin-bottom: 3vw; /*overflow-y: scroll;
                     */ }
         #input {  width: 96%; position: fixed; bottom: 0; left: 0; font-size: 3vw; }
         #image {               position: fixed; bottom: 0;          font-size: 3vw; right:0; }
-        #wenoweno{ font-family:'Waltograph UI Bold';              position: fixed; bottom: 4vw;          font-size: 3vw; right:0; border: 2px black;}
+        #upload{ font-family:'Waltograph UI Bold';              position: fixed; bottom: 4vw;          font-size: 3vw; right:0; border: 2px black;}
         #enviar{               position: fixed; bottom: 0vw;          font-size: 3.1vw; right:0; border: 2px black; /*background-color: #c9edf2;*/}
         #status { width:88px; display:block; float:left; }
         </style>
     </head>
     <body>
-        <div id="content"></div>
+        <div id="content">
+        </div>
         <div>
             <span id="status">Connecting...</span>
             <span id="inputs">
             <input type="text" id="input" disabled="disabled" />
 <form id="imgbb" method="POST" url="https://api.imgbb.com/1/upload?key=f78e74601edcdc526eb41972404beeaa">
 <input type="file" id="image" value="SUBIR IMAGEN..." name="image" style="display: none;"/>
-<label for="image" id="wenoweno">UPLOAD</label>
+<label for="image" id="upload">UPLOAD</label>
 <label id="enviar">⏩</label>
 </form>
             </span>
