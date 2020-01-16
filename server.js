@@ -145,6 +145,7 @@ function chatea(client){
                     console.log('no match:'+clients[i].id);
                 }
             }
+            console.log('noloop.'+clients.length);
                 // push back user's color to be reused by another user
                 colors.push(userColor);
             }
