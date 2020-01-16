@@ -40,10 +40,10 @@ $(function test() {
         connection.close();
         setTimeout(test,1000);
     }
-    window.onbeforeunload = function() {
+    /*window.onbeforeunload = function() {
     connection.onclose = function () {}; // disable onclose handler first
     connection.close();
-    };
+    };*/
     connection.onerror = function (error) {
         // just in there were some problems with conenction...
         content.html($('<p>', { text: 'Sorry, but there\'s some problem with your '

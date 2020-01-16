@@ -146,8 +146,9 @@ function chatea(client){
                     console.log('no match:'+clients[i].id?clients[i].id:'noid');
                 }
             }   
-                if(deleteIndex >=0){                    
+                if(deleteIndex !== null){                    
                     clients.splice(deleteIndex,1);
+                    console.log('deleted, clients.length:'+clients.length);
                 }
             console.log('noloop.'+clients.length);
                 // push back user's color to be reused by another user
