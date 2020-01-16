@@ -31,6 +31,10 @@ function chatea(client){
     /**
      * Helper function for escaping input strings
      */
+    function random_number(digits){
+    var number = String(Math.random());
+    return number.substr(2,digits);
+    }
     function htmlEntities(str) {
         return String(str).replace(/&/g, '&amp;').replace(/<(?!(marquee>|\/marquee>))/g, '&lt;')
                           /*.replace(/(?!marquee)>/g, '&gt;')*/.replace(/"/g, '&quot;').replace(/\'/g,'&apos;')
@@ -125,15 +129,14 @@ function chatea(client){
 
         // user disconnected
         connection.on('close', function(connection) {
-  for (var i = 0; i < clients.length; i ++) {
-    if ((connection.remoteAddress == clients[i].remoteAddress) 
-      && (connection.socket._peername.port == clients[i].socket._peername.port)) {
-      clients.splice(i, 1)
-    }
-  }
+            if (userName !== false && userColor !== false) {
+                console.log((new Date()) + " Peer "
+                    + connection.remoteAddress + " disconnected.");
+                // remove user from the list of connected clients
+                clients.splice(index, 1);
                 // push back user's color to be reused by another user
                 colors.push(userColor);
-            
+            }
         });
 
     });
