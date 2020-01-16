@@ -1,6 +1,7 @@
 // http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
 "use strict";
 const assert = require('assert');
+const uuid = require('uuid');
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://justo:fn231093@cluster0-syxf1.mongodb.net/test?retryWrites=true&w=majority";
@@ -77,6 +78,8 @@ function chatea(client){
         // (http://en.wikipedia.org/wiki/Same_origin_policy)
         var connection = request.accept(null, request.origin); 
         // we need to know client index to remove them on 'close' event
+        var id = uuid.v4();
+        connection.id = id;
         var index = clients.push(connection) - 1;
         var userName = false;
         var userColor = false;
@@ -121,7 +124,6 @@ function chatea(client){
                     var json = JSON.stringify({ type:'message', data: obj });
                     for (var i=0; i < clients.length; i++) {
                         clients[i].sendUTF(json);
-                        console.log(clients);
                     }
                 }
             }
@@ -133,7 +135,12 @@ function chatea(client){
                 console.log((new Date()) + " Peer "
                     + connection.remoteAddress + " disconnected.");
                 // remove user from the list of connected clients
-                clients.splice(index, 1);
+                for(var i = 0; i < clients.length; i++){
+                if(clients[i].id == id){
+                    clients.splice(i,1);
+                    console.log('client '+clients[i].id+' disconnected');
+                }
+            }
                 // push back user's color to be reused by another user
                 colors.push(userColor);
             }
