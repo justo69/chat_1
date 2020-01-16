@@ -141,6 +141,9 @@ function chatea(client){
                     clients.splice(i,1);
                     console.log('client '+clients[i].id+' disconnected');
                 }
+                else{
+                    console.log('no match:'+clients[i].id);
+                }
             }
                 // push back user's color to be reused by another user
                 colors.push(userColor);
