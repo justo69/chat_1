@@ -117,6 +117,7 @@ function chatea(client){
                     var json = JSON.stringify({ type:'message', data: obj });
                     for (var i=0; i < clients.length; i++) {
                         clients[i].sendUTF(json);
+                        console.log(clients);
                     }
                 }
             }
@@ -124,14 +125,15 @@ function chatea(client){
 
         // user disconnected
         connection.on('close', function(connection) {
-            if (userName !== false && userColor !== false) {
-                console.log((new Date()) + " Peer "
-                    + connection.remoteAddress + " disconnected.");
-                // remove user from the list of connected clients
-                clients.splice(index, 1);
+  for (var i = 0; i < clients.length; i ++) {
+    if ((connection.remoteAddress == clients[i].remoteAddress) 
+      && (connection.socket._peername.port == clients[i].socket._peername.port)) {
+      clients.splice(i, 1)
+    }
+  }
                 // push back user's color to be reused by another user
                 colors.push(userColor);
-            }
+            
         });
 
     });

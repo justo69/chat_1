@@ -57,7 +57,9 @@ $(function test() {
             console.log('This doesn\'t look like a valid JSON: ', message.data);
             return;
         }
-
+        if(!document.hasFocus()){
+            $('title').prepend('* ');
+        }
         // NOTE: if you're not sure about the JSON structure
         // check the server source code above
         if (json.type === 'color') { // first response from the server with user's color
@@ -82,11 +84,14 @@ $(function test() {
         function dispara(){
             // send the message as an ordinary text
             var msg = $('#input').val();
+            if (!msg) {
+                return;
+            }
             connection.send(msg);
             $('#input').val('');
             // disable the input field to make the user wait until server
             // sends back response
-            input.attr('disabled', 'disabled');
+            //input.attr('disabled', 'disabled');
 
             // we know that the first message sent from a user their name
             if (myName === false) {
@@ -108,7 +113,7 @@ $(function test() {
             $(this).val('');
             // disable the input field to make the user wait until server
             // sends back response
-            input.attr('disabled', 'disabled');
+            //input.attr('disabled', 'disabled');
 
             // we know that the first message sent from a user their name
             if (myName === false) {
@@ -141,4 +146,11 @@ $(function test() {
              + */': ' + message + '</p>');
         $(document).scrollTop($(document).height());
     }
+var hasFocus = false,
+    toggleFocus = function() {
+        hasFocus = !hasFocus
+        document.title = "chat with images!";
+    };
+window.addEventListener( 'focus', toggleFocus );
+window.addEventListener( 'blur', toggleFocus );
 });
