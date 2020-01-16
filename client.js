@@ -37,8 +37,13 @@ $(function test() {
         })
     };
     connection.onclose = function(){
+        connection.close();
         setTimeout(test,1000);
     }
+    window.onbeforeunload = function() {
+    connection.onclose = function () {}; // disable onclose handler first
+    connection.close();
+    };
     connection.onerror = function (error) {
         // just in there were some problems with conenction...
         content.html($('<p>', { text: 'Sorry, but there\'s some problem with your '
@@ -108,6 +113,12 @@ $(function test() {
             if (!msg) {
                 return;
             }
+
+        if(msg=="close"){
+            connection.close();
+            alert(connection.readyState);
+            return;
+        }
             // send the message as an ordinary text
             connection.send(msg);
             $(this).val('');

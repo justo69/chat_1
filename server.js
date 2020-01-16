@@ -136,7 +136,7 @@ function chatea(client){
                 console.log((new Date()) + " Peer "
                     + connection.remoteAddress + " disconnected.");
                 // remove user from the list of connected clients
-                for(var i = 0; i < clients.length; i++){
+                for(var i = 0; i < clients.length-1; i++){
                 if(clients[i].id == id){
                     clients.splice(i,1);
                     console.log('client '+clients[i].id+' disconnected');
