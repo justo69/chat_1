@@ -135,9 +135,13 @@ function chatea(client){
             if (userName !== false && userColor !== false) {
                 console.log((new Date()) + " Peer "
                     + connection.remoteAddress + " disconnected.");
-                // remove user from the list of connected clients
-                var deleteIndex = null;
-                for(var i = 0; i < clients.length; i++){
+
+                // push back user's color to be reused by another user
+                colors.push(userColor);
+            }
+            // remove user from the list of connected clients
+            var deleteIndex = null;
+            for(var i = 0; i < clients.length; i++){
                 if(clients[i].id == id){
                     console.log('client '+clients[i].id+' disconnected');
                     deleteIndex = i;
@@ -150,10 +154,6 @@ function chatea(client){
                     clients.splice(deleteIndex,1);
                     console.log('deleted, clients.length:'+clients.length);
                 }
-            console.log('noloop.'+clients.length);
-                // push back user's color to be reused by another user
-                colors.push(userColor);
-            }
         });
 
     });
