@@ -70,7 +70,7 @@ async function chatea(client){
 
     // This callback function is called every time someone
     // tries to connect to the WebSocket server
-    wsServer.on('request', function(request) {
+    wsServer.on('request', async function(request) {
         console.log((new Date()) + ' Connection from origin ' + request.origin + '.');
 
         // accept connection - you should check 'request.origin' to make sure that
