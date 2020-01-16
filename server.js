@@ -136,13 +136,13 @@ function chatea(client){
                 console.log((new Date()) + " Peer "
                     + connection.remoteAddress + " disconnected.");
                 // remove user from the list of connected clients
-                for(var i = 0; i < clients.length-1; i++){
+                for(var i = 0; i < clients.length; i++){
                 if(clients[i].id == id){
                     clients.splice(i,1);
                     console.log('client '+clients[i].id+' disconnected');
                 }
                 else{
-                    console.log('no match:'+clients[i].id);
+                    console.log('no match:'+clients[i].id?clients[i].id:'noid');
                 }
             }
             console.log('noloop.'+clients.length);

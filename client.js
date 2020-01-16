@@ -116,7 +116,6 @@ $(function test() {
 
         if(msg=="close"){
             connection.close();
-            alert(connection.readyState);
             return;
         }
             // send the message as an ordinary text
