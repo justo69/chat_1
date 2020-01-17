@@ -97,7 +97,7 @@ async function chatea(client){
         }*/
 
         // user sent some message
-        connection.on('message', function(message) {
+        connection.on('message', async function(message) {
             if (message.type === 'utf8') { // accept only text
             if(message.utf8Data.substr(0,15) == ":/history_lazy:"){
                 var N = message.utf8Data.substr(14,message.utf8Data.length()-15);
