@@ -151,6 +151,11 @@ $(function test() {
              + */': ' + message + '</p>');
         $(document).scrollTop($(document).height());
     }
+    $(window).scroll(function(){
+        if($(window).scrollTop() <= $(window).height() + 200){
+            
+        }
+    })
 var hasFocus = false,
     toggleFocus = function() {
         hasFocus = !hasFocus
