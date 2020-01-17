@@ -26,7 +26,7 @@ $(function test() {
 
     // open connection
     var connection = new WebSocket('wss://chatrecicla.herokuapp.com');
-
+    var messages_n = 0;
     connection.onopen = function () {
         // first we want users to enter their names
         input.removeAttr('disabled');
@@ -78,7 +78,12 @@ $(function test() {
                 addMessage(json.data[i].author, json.data[i].text,
                            json.data[i].color, new Date(json.data[i].time), true);
             }
-        } else if (json.type === 'message') { // it's a single message
+        }
+          else if (json.type === 'history_lazy'){
+                addMessage(json.data[i].author, json.data[i].text,
+                           json.data[i].color, new Date(json.data[i].time), true);
+          }
+         else if (json.type === 'message') { // it's a single message
             input.removeAttr('disabled'); // let the user write another message
             addMessage(json.data.author, json.data.text,
                        json.data.color, new Date(json.data.time));
@@ -145,16 +150,27 @@ $(function test() {
     /**
      * Add message to the chat window
      */
-    function addMessage(author, message, color, dt) {
+    function addMessage(author, message, color, dt, lazy_history = false) {
+        if(lazy_history){
+            content.prepend('<p><span style="color:' + color + '">' + author + '</span>'+/* @ ' +
+             + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
+             + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
+             + */': ' + message + '</p>');
+        }
+        else{
         content.append('<p><span style="color:' + color + '">' + author + '</span>'+/* @ ' +
              + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
              + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
              + */': ' + message + '</p>');
+        }
+        messages_n++;
         $(document).scrollTop($(document).height());
     }
+    //LAZY LOAD
     $(window).scroll(function(){
         if($(window).scrollTop() <= $(window).height() + 200){
-            connection.send(JSON.stringify({ type: 'history_lazy', messages_n: connection.messages}));
+            connection.send(":/history_lazy:"+messages_n);
+            console.log(":/history_lazy:"+messages_n);
         }
     })
 var hasFocus = false,

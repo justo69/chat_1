@@ -99,6 +99,13 @@ async function chatea(client){
         // user sent some message
         connection.on('message', function(message) {
             if (message.type === 'utf8') { // accept only text
+            if(message.utf8Data.substr(0,15) == ":/history_lazy:"){
+                var N = message.utf8Data.substr(14,message.utf8Data.length()-15);
+                var n_of_m = await client.db("chatrecicla").collection("chatrecicla").countDocuments();
+                var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(n_of_m - N).toArray(function(err,results){
+                    connection.sendUTF(JSON.stringify( { type: 'history_lazy', data: results} ));
+                });
+            }
                 if (userName === false) { // first message sent by user is their name
                     // remember user name
                     userName = htmlEntities(message.utf8Data);
