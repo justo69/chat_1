@@ -100,7 +100,7 @@ async function chatea(client){
         connection.on('message', async function(message) {
             if (message.type === 'utf8') { // accept only text
             if(message.utf8Data.substr(0,15) == ":/history_lazy:"){
-                var N = message.utf8Data.substr(15,message.utf8Data.length-15);
+                var N = parseInt(message.utf8Data.substr(15,message.utf8Data.length-15),10);
                 N+=40;
                 console.log("N = "+N);
                 var n_of_m = await client.db("chatrecicla").collection("chatrecicla").countDocuments();
