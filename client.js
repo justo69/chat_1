@@ -80,8 +80,10 @@ $(function test() {
             }
         }
           else if (json.type === 'history_lazy'){
+            for (var i=json.data.length-1; i >= 0; i--) {
                 addMessage(json.data[i].author, json.data[i].text,
-                           json.data[i].color, new Date(json.data[i].time), true);
+                           json.data[i].color, new Date(json.data[i].time),true);
+            }
           }
          else if (json.type === 'message') { // it's a single message
             input.removeAttr('disabled'); // let the user write another message
@@ -167,12 +169,18 @@ $(function test() {
         $(document).scrollTop($(document).height());
     }
     //LAZY LOAD
+    function lazy_load(){
     $(window).scroll(function(){
-        if($(window).scrollTop() <= $(window).height() + 200){
+        if($(window).scrollTop() <= 0){
             connection.send(":/history_lazy:"+messages_n);
             console.log(":/history_lazy:"+messages_n);
+            $(window).off('scroll');
+            setTimeout(lazy_load,1000);
         }
     })
+
+    }
+    lazy_load();
 var hasFocus = false,
     toggleFocus = function() {
         hasFocus = !hasFocus
