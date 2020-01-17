@@ -1,4 +1,4 @@
-var active = 1;
+var active = 1; var scrolled = 0;
 $(function test() {
     "use strict";
 
@@ -82,6 +82,7 @@ $(function test() {
             input.removeAttr('disabled'); // let the user write another message
             addMessage(json.data.author, json.data.text,
                        json.data.color, new Date(json.data.time));
+            connection.messages+=1;
         } else {
             console.log('Hmm..., I\'ve never seen JSON like this: ', json);
         }
@@ -153,7 +154,7 @@ $(function test() {
     }
     $(window).scroll(function(){
         if($(window).scrollTop() <= $(window).height() + 200){
-            
+            connection.send(JSON.stringify({ type: 'history_lazy', messages_n: connection.messages}));
         }
     })
 var hasFocus = false,

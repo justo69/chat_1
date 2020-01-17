@@ -129,6 +129,9 @@ async function chatea(client){
                     }
                 }
             }
+            else if (message.type === 'json'){
+                console.log('json received: '+message);
+            }
         });
 
         // user disconnected
