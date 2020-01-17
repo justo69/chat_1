@@ -101,6 +101,7 @@ async function chatea(client){
             if (message.type === 'utf8') { // accept only text
             if(message.utf8Data.substr(0,15) == ":/history_lazy:"){
                 var N = message.utf8Data.substr(14,message.utf8Data.length-15);
+                console.log("N = "+N);
                 var n_of_m = await client.db("chatrecicla").collection("chatrecicla").countDocuments();
                 var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(n_of_m - N).toArray(function(err,results){
                     connection.sendUTF(JSON.stringify( { type: 'history_lazy', data: results} ));
