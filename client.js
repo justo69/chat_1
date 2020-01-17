@@ -76,7 +76,7 @@ $(function test() {
             // insert every single message to the chat window
             for (var i=0; i < json.data.length; i++) {
                 addMessage(json.data[i].author, json.data[i].text,
-                           json.data[i].color, new Date(json.data[i].time), true);
+                           json.data[i].color, new Date(json.data[i].time));
             }
         }
           else if (json.type === 'history_lazy'){
