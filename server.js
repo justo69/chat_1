@@ -104,7 +104,7 @@ async function chatea(client){
                 N+=10;
                 console.log("N = "+N);
                 var n_of_m = await client.db("chatrecicla").collection("chatrecicla").countDocuments();
-                var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(n_of_m - N).toArray(function(err,results){
+                var history2 = client.db("chatrecicla").collection("chatrecicla").find().skip(n_of_m - N).limit(10).toArray(function(err,results){
                     connection.sendUTF(JSON.stringify( { type: 'history_lazy', data: results} ));
                 });
             }
