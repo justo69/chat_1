@@ -108,6 +108,13 @@ async function chatea(client){
                     connection.sendUTF(JSON.stringify( { type: 'history_lazy', data: results} ));
                 });
             }
+            else if(message.utf8Data == "/favs"){
+                var favs = await client.db("chatrecicla").collection("favs").find({user : userName});
+                connection.sendUTF(JSON.stringify( { type: 'favs', data: favs}));
+            }
+            else if(message.utf8Data.substr(0,8) == "/favthis"){
+                client.db("chatrecicla").collection("favs").insertOne({name: userName, msg: message.utf8.data.substr(9)});
+            }
             else{
                 if (userName === false) { // first message sent by user is their name
                     // remember user name

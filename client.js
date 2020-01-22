@@ -81,15 +81,23 @@ $(function test() {
         }
           else if (json.type === 'history_lazy'){
             for (var i=json.data.length-1; i >= 0; i--) {
+                if(i==json.data.length-1){
+                    json.data[i].text = "<span class='first'>"+json.data[i].text+'</span>';
+                }
                 addMessage(json.data[i].author, json.data[i].text,
                            json.data[i].color, new Date(json.data[i].time),true);
+            }
+            $(window).scrollTop($('.first').first().offset().top);
+          }
+          else if (json.type === 'favs'){
+            for(var fav_i = 0; fav_i < json.data.length; fav_i++){
+                $('#favs').append(json.data[i].msg);
             }
           }
          else if (json.type === 'message') { // it's a single message
             input.removeAttr('disabled'); // let the user write another message
             addMessage(json.data.author, json.data.text,
                        json.data.color, new Date(json.data.time));
-            connection.messages+=1;
         } else {
             console.log('Hmm..., I\'ve never seen JSON like this: ', json);
         }
@@ -157,16 +165,16 @@ $(function test() {
             content.prepend('<p><span style="color:' + color + '">' + author + '</span>'+/* @ ' +
              + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
              + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
-             + */': ' + message + '</p>');
+             + */': <span class="message">' + message + '</span></p>');
         }
         else{
         content.append('<p><span style="color:' + color + '">' + author + '</span>'+/* @ ' +
              + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
              + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
-             + */': ' + message + '</p>');
+             + */': <span class="message" onclick="favthis(this)">' + message + '</span></p>');
+        $(document).scrollTop($(document).height());
         }
         messages_n++;
-        $(document).scrollTop($(document).height());
     }
     //LAZY LOAD
     function lazy_load(){
@@ -175,17 +183,20 @@ $(function test() {
             connection.send(":/history_lazy:"+messages_n);
             console.log(":/history_lazy:"+messages_n);
             $(window).off('scroll');
-            setTimeout(lazy_load,1000);
         }
     })
 
     }
-    lazy_load();
 var hasFocus = false,
     toggleFocus = function() {
         hasFocus = !hasFocus
         document.title = "chat with images!";
     };
+$('#heart').click(favs);
+async function favs(){
+    $('#heart').prepend('<div id="favs" style="bottom:6vw;right:1vw;position:absolute;">favs</div>');
+    connection.send('/favs');
+}
 window.addEventListener( 'focus', toggleFocus );
 window.addEventListener( 'blur', toggleFocus );
 });
