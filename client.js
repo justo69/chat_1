@@ -1,4 +1,4 @@
-var active = 1; var scrolled = 0; var connection;
+var active = 1; var scrolled = 0;
 $(function test() {
     "use strict";
 
@@ -25,7 +25,7 @@ $(function test() {
     }
 
     // open connection
-    connection = new WebSocket('wss://chatrecicla.herokuapp.com');
+    var connection = new WebSocket('wss://chatrecicla.herokuapp.com');
     var messages_n = 0;
     connection.onopen = function () {
         // first we want users to enter their names
@@ -173,7 +173,7 @@ $(function test() {
         content.append('<p><span style="color:' + color + '">' + author + '</span>'+/* @ ' +
              + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
              + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
-             + */': <span class="message" onclick="favthis(this)">' + message + '</span></p>');
+             + */': <span class="message">' + message + '</span></p>');
         $(document).scrollTop($(document).height());
         }
         messages_n++;
@@ -199,6 +199,11 @@ async function favs(){
     $('#heart').prepend('<div id="favs" style="bottom:6vw;right:1vw;position:absolute;">favs</div>');
     connection.send('/favs');
 }
+function favthis(element){
+    connection.send('/favthis '+element[0].innerHTML);
+    console.log(element);
+}
 window.addEventListener( 'focus', toggleFocus );
 window.addEventListener( 'blur', toggleFocus );
+$(document).on('click', '.message', function(){favthis($( this ))});
 });

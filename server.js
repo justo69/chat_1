@@ -110,7 +110,9 @@ async function chatea(client){
             }
             else if(message.utf8Data == "/favs"){
                 console.log('/favs');
-                var favs = client.db("chatrecicla").collection("favs").find({user : userName}).toArray(function(err,results){
+                var query = {};
+                query[user] = userName;
+                var favs = client.db("chatrecicla").collection("favs").find(query).toArray(function(err,results){
                 connection.sendUTF(JSON.stringify( { type: 'favs', data: results}));
                 });
             }
