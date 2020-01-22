@@ -121,7 +121,7 @@ async function chatea(client){
             else if(message.utf8Data.substr(0,10) == "/unfavthis"){
                 console.log('/favthis: '+message.utf8Data);
                 client.db("chatrecicla").collection("favs").deleteOne({name: userName, msg: message.utf8Data.substr(11)});
-                console.log('trying to delete:'+{name: userName, msg: message.utf8Data.substr(11));
+                console.log('trying to delete:'+{name: userName, msg: message.utf8Data.substr(11)});
             }
             else{
                 if (userName === false) { // first message sent by user is their name
