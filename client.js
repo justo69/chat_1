@@ -90,7 +90,9 @@ $(function test() {
             $(window).scrollTop($('.first').first().offset().top);
           }
           else if (json.type === 'favs'){
+            console.log('favs');
             for(var fav_i = 0; fav_i < json.data.length; fav_i++){
+                console.log(json.data[i]);
                 $('#favs').append(json.data[i].msg);
             }
           }
