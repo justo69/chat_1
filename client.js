@@ -1,4 +1,4 @@
-var active = 1; var scrolled = 0;
+var active = 1; var scrolled = 0; var connection;
 $(function test() {
     "use strict";
 
@@ -25,7 +25,7 @@ $(function test() {
     }
 
     // open connection
-    var connection = new WebSocket('wss://chatrecicla.herokuapp.com');
+    connection = new WebSocket('wss://chatrecicla.herokuapp.com');
     var messages_n = 0;
     connection.onopen = function () {
         // first we want users to enter their names
