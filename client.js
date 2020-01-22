@@ -1,4 +1,4 @@
-var active = 1; var scrolled = 0;
+var active = 1; var scrolled = 0; var favs_open = false;
 $(function test() {
     "use strict";
 
@@ -90,10 +90,8 @@ $(function test() {
             $(window).scrollTop($('.first').first().offset().top);
           }
           else if (json.type === 'favs'){
-            console.log('favs');
             for(var fav_i = 0; fav_i < json.data.length; fav_i++){
-                console.log(json.data[i]);
-                $('#favs').append(json.data[i].msg);
+                $('#favs').append(json.data[fav_i].msg);
             }
           }
          else if (json.type === 'message') { // it's a single message
@@ -185,25 +183,45 @@ $(function test() {
             connection.send(":/history_lazy:"+messages_n);
             console.log(":/history_lazy:"+messages_n);
             $(window).off('scroll');
+            setTimeout(lazy_load,500);
         }
-    })
+    })}
+    lazy_load();
 
-    }
 var hasFocus = false,
     toggleFocus = function() {
         hasFocus = !hasFocus
         document.title = "chat with images!";
     };
-$('#heart').click(favs);
 async function favs(){
-    $('#heart').prepend('<div id="favs" style="bottom:6vw;right:1vw;position:absolute;">favs</div>');
+    if(favs_open){
+        $('#favs').remove();
+        favs_open = false;
+    }
+    else{
+    $('#heart').prepend('<div id="favs" style="bottom:6vw;right:1vw;position:absolute;width:15vw;background-color:white;"></div>');
     connection.send('/favs');
+    favs_open = true;
+    }
 }
+$('#heart').on('mouseup',favs);
 function favthis(element){
     connection.send('/favthis '+element[0].innerHTML);
     console.log(element);
 }
+function unfavthis(element){
+    connection.send('/unfavthis'+element[0].innerHTML);
+}
 window.addEventListener( 'focus', toggleFocus );
 window.addEventListener( 'blur', toggleFocus );
-$(document).on('click', '.message', function(){favthis($( this ))});
+$(document).on('click', '.message', function(){
+    if($(this).hasClass('faved')){
+        $(this).html($(this).html().substr(2));
+        $(this).removeClass('faved');
+        unfavthis($( this ));
+    }
+    else{
+    favthis($( this ));$(this).prepend('💖');$(this).addClass('faved');
+    }
+    });
 });

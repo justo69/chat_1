@@ -118,6 +118,10 @@ async function chatea(client){
                 console.log('/favthis: '+message.utf8Data);
                 client.db("chatrecicla").collection("favs").insertOne({name: userName, msg: message.utf8Data.substr(9)});
             }
+            else if(message.utf8Data.substr(0,10) == "/unfavthis"){
+                console.log('/favthis: '+message.utf8Data);
+                client.db("chatrecicla").collection("favs").deleteOne({name: userName, msg: message.utf8Data.substr(9)});
+            }
             else{
                 if (userName === false) { // first message sent by user is their name
                     // remember user name
