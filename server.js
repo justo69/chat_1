@@ -109,10 +109,13 @@ async function chatea(client){
                 });
             }
             else if(message.utf8Data == "/favs"){
-                var favs = client.db("chatrecicla").collection("favs").find({user : userName});
+                console.log('/favs');
+                var favs = client.db("chatrecicla").collection("favs").find({user : userName}).toArray(function(err,results){
                 connection.sendUTF(JSON.stringify( { type: 'favs', data: favs}));
+                });
             }
             else if(message.utf8Data.substr(0,8) == "/favthis"){
+                console.log('/favthis: '+message.utf8Data);
                 client.db("chatrecicla").collection("favs").insertOne({name: userName, msg: message.utf8.data.substr(9)});
             }
             else{
