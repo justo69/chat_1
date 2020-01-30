@@ -10,7 +10,9 @@ $(function test() {
     // my color assigned by the server
     var myColor = false;
     // my name sent to the server
-    var myName = false;
+
+    var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    var myName = (cookieValue.length==0)?false:cookieValue;
 
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -28,6 +30,7 @@ $(function test() {
     var connection = new WebSocket('wss://chatrecicla.herokuapp.com');
     var messages_n = 0;
     connection.onopen = function () {
+        if(myName===false){
         // first we want users to enter their names
         input.removeAttr('disabled');
         input.val('enter your name');
@@ -35,6 +38,10 @@ $(function test() {
             input.val('');
             input.off('focus');
         })
+        }
+        else{
+            addMessage('/name '+myName);
+        }
     };
     connection.onclose = function(){
         connection.close();
@@ -58,6 +65,7 @@ $(function test() {
         // the massage is not chunked or otherwise damaged.
         try {
             var json = JSON.parse(message.data);
+            alert(message.data);
         } catch (e) {
             console.log('This doesn\'t look like a valid JSON: ', message.data);
             return;
@@ -69,6 +77,9 @@ $(function test() {
         // check the server source code above
         if (json.type === 'color') { // first response from the server with user's color
             myColor = json.data;
+            myName = json.name;
+            document.cookie = "name="+encodeURIComponent(myName)+";max-age="+31536000+";expires="+(Date.UTC(Date.now()+31536000));
+            //alert(myName);
             status.text(myName + ': ').css('color', myColor);
             input.removeAttr('disabled').focus();
             // from now user can start sending messages
@@ -207,10 +218,10 @@ async function favs(){
 $('#heart').on('mouseup',favs);
 function favthis(element){
     connection.send('/favthis '+element[0].innerHTML);
-    console.log(element);
 }
 function unfavthis(element){
-    connection.send('/unfavthis'+element[0].innerHTML);
+    connection.send('/unfavthis '+element[0].innerHTML);
+    console.log('/unfavthis '+element[0].innerHTML);
 }
 window.addEventListener( 'focus', toggleFocus );
 window.addEventListener( 'blur', toggleFocus );
@@ -224,4 +235,7 @@ $(document).on('click', '.message', function(){
     favthis($( this ));$(this).prepend('💖');$(this).addClass('faved');
     }
     });
+$(document).on('click', '#favs img', function(){
+    //alert($(this).html());
+    })
 });

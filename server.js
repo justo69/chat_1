@@ -119,9 +119,16 @@ async function chatea(client){
                 client.db("chatrecicla").collection("favs").insertOne({name: userName, msg: message.utf8Data.substr(9)});
             }
             else if(message.utf8Data.substr(0,10) == "/unfavthis"){
-                console.log('/favthis: '+message.utf8Data);
                 client.db("chatrecicla").collection("favs").deleteOne({name: userName, msg: message.utf8Data.substr(11)});
-                console.log('trying to delete:'+{name: userName, msg: message.utf8Data.substr(11)});
+            }
+            else if(message.utf8Data.substr(0,6) == "/name "){
+                    // remember user name
+                    userName = htmlEntities(message.utf8Data.substr(6));
+                    // get random color and send it back to the user
+                    userColor = colors.shift();
+                    connection.sendUTF(JSON.stringify({ type:'color', data: userColor, name: userName }));
+                    console.log((new Date()) + ' User is known as: ' + userName
+                                + ' with ' + userColor + ' color.');
             }
             else{
                 if (userName === false) { // first message sent by user is their name
@@ -129,7 +136,7 @@ async function chatea(client){
                     userName = htmlEntities(message.utf8Data);
                     // get random color and send it back to the user
                     userColor = colors.shift();
-                    connection.sendUTF(JSON.stringify({ type:'color', data: userColor }));
+                    connection.sendUTF(JSON.stringify({ type:'color', data: userColor, name: userName }));
                     console.log((new Date()) + ' User is known as: ' + userName
                                 + ' with ' + userColor + ' color.');
 
