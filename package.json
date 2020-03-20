@@ -11,7 +11,7 @@
   "keywords": [],
   "description": "",
   "dependencies": {
-    "express": "3.0.1",
+    "express": "3.11.0",
     "mongodb": "^3.4.1",
     "node-uuid": "^1.4.8",
     "uuid": "^3.3.3",
